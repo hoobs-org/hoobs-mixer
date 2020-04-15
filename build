@@ -1,0 +1,191 @@
+#!/bin/bash
+
+##################################################################################################
+# hoobs-mixer                                                                                    #
+# Copyright (C) 2019 HOOBS                                                                       #
+#                                                                                                #
+# This program is free software: you can redistribute it and/or modify                           #
+# it under the terms of the GNU General Public License as published by                           #
+# the Free Software Foundation, either version 3 of the License, or                              #
+# (at your option) any later version.                                                            #
+#                                                                                                #
+# This program is distributed in the hope that it will be useful,                                #
+# but WITHOUT ANY WARRANTY; without even the implied warranty of                                 #
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the                                  #
+# GNU General Public License for more details.                                                   #
+#                                                                                                #
+# You should have received a copy of the GNU General Public License                              #
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.                          #
+##################################################################################################
+
+MODE=""
+ARCH=""
+ACTION=""
+CONNECT="false"
+
+motd()
+{
+    echo ""
+    echo "   _    _  ____   ____  ____   _____  "
+    echo "  | |  | |/ __ \ / __ \|  _ \ / ____| "
+    echo "  | |__| | |  | | |  | | |_) | (___   "
+    echo "  |  __  | |  | | |  | |  _ < \___ \  "
+    echo "  | |  | | |__| | |__| | |_) |____) | "
+    echo "  |_|  |_|\____/ \____/|____/|_____/  "
+    echo "                                      "
+}
+
+usage()
+{
+    echo ""
+    echo "help: image [command]"
+    echo "    Display information about builtin commands."
+    echo ""
+    echo "    This is used to build the HOOBS SD card images."
+    echo ""
+    echo "    Note:"
+    echo "        This script requires elevated permissions, please run this with"
+    echo "        SUDO or ROOT privileges."
+    echo ""
+    echo "    Commands:"
+    echo "        image                    builds stable architectures"
+    echo "        connect                  builds the hoobs connect interface"
+    echo "        volume create            create the build volumes"
+    echo "        volume remove            remove the build volumes"
+    echo ""
+    echo "    Options:"
+    echo "        -h, --help               displays this help menu"
+    echo ""
+    echo "    Returns:"
+    echo "        Returns success unless the install fails."
+    echo ""
+}
+
+line()
+{
+    echo "--------------------------------------------------------------------------------------------------------------------------"
+}
+
+while [ "$1" != "" ]; do
+    case $1 in
+        image )             MODE="image"
+                            ;;
+
+        volume )            MODE="volume"
+                            ;;
+
+        create )            ACTION="create"
+                            ;;
+
+        remove )            ACTION="remove"
+                            ;;
+
+        connect )           MODE="connect"
+                            ;;
+
+        -h | --help )       usage
+                            exit
+                            ;;
+
+        * )                 usage
+                            exit
+    esac
+
+    shift
+done
+
+case $MODE in
+    "volume" )  motd
+
+                if [[ "$ACTION" = "create" ]]; then
+                    echo ""
+                    echo "Creating Build Volumes"
+                    line
+
+                    docker rm -v hoobs-mixer
+
+                    docker volume create mixer
+                    docker volume create hoobs-work
+
+                    line
+                    echo ""
+                fi
+
+                if [[ "$ACTION" = "remove" ]]; then
+                    echo ""
+                    echo "Removing Build Volumes"
+                    line
+
+                    docker rm -v hoobs-mixer
+
+                    docker volume rm mixer
+                    docker volume rm hoobs-work
+
+                    line
+                    echo ""
+                fi
+
+                ;;
+
+    "connect" ) motd
+
+                if [[ -f "../hoobs-connect/.gitignore" ]]; then
+                    echo ""
+                    echo "Building Captive WiFi Portal"
+                    line
+
+                    cd ../hoobs-connect/
+
+                    rm -f ./builds/wifi-connect-hoobs.tar.gz
+                    cp -R ./ui ./builds/
+                    cd ./builds/
+                    tar -cvzf ui.tar.gz ./ui/*
+                    mkdir ./wifi-connect-hoobs
+                    mv ./ui ./wifi-connect-hoobs/
+                    mv ./ui.tar.gz ./wifi-connect-hoobs/
+                    tar -cvzf wifi-connect-hoobs.tar.gz ./wifi-connect-hoobs/*
+                    chmod 755 ./wifi-connect-hoobs.tar.gz
+                    rm -fR ./wifi-connect-hoobs
+
+                    line
+                    echo ""
+                else
+                    echo ""
+
+                    line
+
+                    echo "You need to clone the \"hoobs-connect\" repository at the same level as \"hoobs-core\"."
+                    echo "Run these commands."
+                    echo "    cd ../"
+                    echo "    git clone https://github.com/hoobs-org/hoobs-connect.git"
+
+                    line
+                    echo ""
+                fi
+
+                ;;
+
+    "image" )   motd
+
+                echo ""
+                echo "Building HOOBS Mixer"
+                line
+
+                docker rm -v hoobs-mixer > /dev/null 2>&1
+                ./build-docker.sh -c mixer
+
+                line
+                echo ""
+                line
+
+                ls -lah deploy
+
+                line
+                echo "Done! Your image(s) should be in deploy/"
+                echo ""
+
+                ;;
+
+    * )         usage
+                ;;
+esac
