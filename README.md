@@ -23,9 +23,9 @@ Default Password: hoobsadmin
 
 Hostname: hoobs
 
-WifiSSID:  HOOBS
+Wifi-AP SSID:  **HOOBS**
 
-Ethernet: hoobs.local or by IP address
+Ethernet:      **hoobs.local or by IP address**
 
 
 ### Wifi Connect
