@@ -5,6 +5,9 @@
 # HOOBS MixerOS
 A basic operating system for the Raspberry Pi with streamlined connectivity.
 
+## HOOBS Mixer OS - Download
+[Download the Lateast Release](https://github.com/hoobs-org/hoobs-mixer/releases)
+
 ### HOOBS Mixer OS - Image for Raspberry
 
 Compatible with: Raspberry Pi 4B, 3B, 3B+ and Zero W
