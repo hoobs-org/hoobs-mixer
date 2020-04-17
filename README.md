@@ -9,22 +9,28 @@ A basic operating system for the Raspberry Pi with streamlined connectivity.
 
 Compatible with: Raspberry Pi 4B, 3B, 3B+ and Zero W
 
+### System Configuration
+
+tbd
+
 ### User Information
 
 Default User: hoobs
+
 Default Password: hoobsadmin
 
 ### Connectivity
 
-Hostname: hoobs.local
+Hostname: hoobs
+
+WifiSSID:  HOOBS
+
+Ethernet: hoobs.local or by IP address
+
 
 ### Wifi Connect
 
-<img src="https://raw.githubusercontent.com/hoobs-org/hoobs-mixer/master/logo/HOOBS_x_MixerOS.png" width="50%">
-
-### How it works
-
-WiFi Connect interacts with NetworkManager, which should be the active network manager on the device's host OS.
+<img src="https://raw.githubusercontent.com/hoobs-org/hoobs-mixer/master/logo/how-it-works.png" width="100%">
 
 ### 1. Advertise: Device Creates Access Point
 
@@ -32,11 +38,11 @@ WiFi Connect detects available WiFi networks and opens an access point with a ca
 
 ### 2. Connect: User Connects Phone to Device Access Point
 
-Connect to the opened access point on the device from your mobile phone or laptop. The access point SSID is, by default, WiFi Connect. It can be changed by setting the --portal-ssid command line argument or the PORTAL_SSID environment variable (see this guide for how to manage environment variables when running on top of balenaOS). By default, the network is unprotected, but a WPA2 passphrase can be added by setting the --portal-passphrase command line argument or the PORTAL_PASSPHRASE environment variable.
+Connect to the opened access point on the device from your mobile phone or laptop. The access point SSID is **HOOBS**. 
 
 ### 3. Portal: Phone Shows Captive Portal to User
 
-After connecting to the access point from a mobile phone, it will detect the captive portal and open its web page. Opening any web page will redirect to the captive portal as well.
+After connecting to the **HOOBS** access point from a mobile phone, it will detect the captive portal and open its web page. Opening any web page will redirect to the captive portal as well.
 
 ### 4. Credentials: User Enters Local WiFi Network Credentials on Phone
 
