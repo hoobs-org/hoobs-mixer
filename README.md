@@ -1,5 +1,5 @@
 
-<img src="https://raw.githubusercontent.com/hoobs-org/hoobs-mixer/master/logo/HOOBS_x_MixerOS.png" width="25%">
+<img src="https://raw.githubusercontent.com/hoobs-org/hoobs-mixer/master/logo/HOOBS_x_MixerOS.png" width="50%">
 
 
 # HOOBS MixerOS
