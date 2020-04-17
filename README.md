@@ -12,17 +12,17 @@ A basic operating system for the Raspberry Pi with streamlined connectivity.
 
 Compatible with: Raspberry Pi 4B, 3B, 3B+ and Zero W
 
-### System Configuration
+### HOOBS Mixer OS - System Configuration
 
 tbd
 
-### User Information
+### HOOBS Mixer OS - User Information
 
 Default User: hoobs
 
 Default Password: hoobsadmin
 
-### Connectivity
+### HOOBS Mixer OS - Connectivity
 
 Hostname: hoobs
 
@@ -31,7 +31,7 @@ Wifi-AP SSID:  **HOOBS**
 Ethernet:      **hoobs.local or by IP address**
 
 
-### Wifi Connect
+### HOOBS Mixer OS - Wifi Connect
 
 <img src="https://raw.githubusercontent.com/hoobs-org/hoobs-mixer/master/logo/how-it-works.png" width="100%">
 
@@ -54,10 +54,6 @@ The captive portal provides the option to select a WiFi SSID from a list with de
 ### 5. Connected!: Device Connects to Local WiFi Network
 
 When the network credentials have been entered, WiFi Connect will disable the access point and try to connect to the network. If the connection fails, it will enable the access point for another attempt. If it succeeds, the configuration will be saved by NetworkManager.
-
-
-
-
 
 
 ## Legal
